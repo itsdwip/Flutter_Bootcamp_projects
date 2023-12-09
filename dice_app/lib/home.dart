@@ -1,6 +1,7 @@
 import 'package:dice_app/background_LinearGradient%20.dart';
 import 'package:flutter/material.dart';
 import '/others/colors.dart';
+import 'dart:math';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,11 +11,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void rollDice() {
-    //---
-  }
+  final randomDiceNumber = Random();
+  var diceNumber = 1;
 
-  var diceCount = 3;
+  void rollDice() {
+    setState(() {
+      diceNumber = randomDiceNumber.nextInt(6) + 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +32,12 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "images/dice-$diceCount.png",
+                "images/dice-$diceNumber.png",
                 width: 200,
                 height: 200,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 25),
                 child: ElevatedButton.icon(
                   icon: const Icon(
                     Icons.rocket_launch,
