@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quiz_app/app_starting.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  const Home(this.activeQuestionsScreen, {super.key});
+
+  final void Function() activeQuestionsScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class Home extends StatelessWidget {
           height: 15,
         ),
         ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: activeQuestionsScreen,
           icon: const Icon(Icons.gps_fixed_outlined),
           label: const Text('Start '),
         )

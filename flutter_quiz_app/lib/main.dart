@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quiz_app/background_color.dart';
+import 'package:flutter_quiz_app/app_starting.dart';
 
 void main() {
   runApp(const MyApp());
