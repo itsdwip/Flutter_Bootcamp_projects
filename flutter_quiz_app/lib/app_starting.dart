@@ -13,17 +13,10 @@ class AppBackGround extends StatefulWidget {
 }
 
 class _AppBackGroundState extends State<AppBackGround> {
-  Widget? activeScreen;
-
-  @override
-  void initState() {
-    activeScreen = Home(setActiveScreen);
-    super.initState();
-  }
-
+  var activeScreen = 'Home-Screen';
   void setActiveScreen() {
     setState(() {
-      activeScreen = const QuestionsScreen();
+      activeScreen = 'QuestionsScreen';
     });
   }
 
@@ -77,7 +70,9 @@ class _AppBackGroundState extends State<AppBackGround> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              child: activeScreen,
+              child: activeScreen == 'Home-Screen'
+                  ? Home(setActiveScreen)
+                  : const QuestionsScreen(),
             )
           ],
         ),
