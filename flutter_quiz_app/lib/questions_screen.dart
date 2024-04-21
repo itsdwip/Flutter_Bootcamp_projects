@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quiz_app/others/components/answer_button_style.dart';
+import 'package:flutter_quiz_app/others/data/questions_data.dart';
+import 'package:flutter_quiz_app/result_screen.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({super.key});
@@ -8,42 +11,64 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreensState extends State<QuestionsScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Questions..',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          AnswerButton('Question 1', () {}),
-          AnswerButton('Question 2 ', () {}),
-          AnswerButton('Question 3 ', () {}),
-          AnswerButton('Question 4 ', () {}),
-        ],
-      ),
+  final List<String> selectedAnswers = [];
+  int currentQuestionIndex = 0;
+
+  void chooseAnswer(String answer) {
+    selectedAnswers.add(answer);
+  }
+
+  void answerQuestion(String selectedAnswers) {
+    setState(
+      () {
+        currentQuestionIndex == 5
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ResultScreen(),
+                ),
+              )
+            : currentQuestionIndex++;
+      },
     );
   }
-}
-
-class AnswerButton extends StatelessWidget {
-  const AnswerButton(this.answerText, this.onTap, {super.key});
-
-  final String answerText;
-  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      child: Text(answerText),
+    var currantquestion = questionsData[currentQuestionIndex];
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              currantquestion.text,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                wordSpacing: 3,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            ...currantquestion.getShuffledAnswers().map(
+              (answer) {
+                return AnswerButton(
+                  answerText: answer,
+                  onTap: () {
+                    answerQuestion(answer);
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

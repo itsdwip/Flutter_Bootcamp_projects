@@ -1,4 +1,4 @@
-import 'package:flutter_quiz_app/others/questions_screen_blueprint.dart';
+import 'package:flutter_quiz_app/others/components/questions_screen_blueprint.dart';
 
 const questionsData = [
   QuestionScreenBlueprint(
