@@ -11,7 +11,7 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreensState extends State<QuestionsScreen> {
-  final List<String> selectedAnswers = [];
+  List<String> selectedAnswers = [];
   int currentQuestionIndex = 0;
 
   void chooseAnswer(String answer) {
@@ -21,16 +21,24 @@ class _QuestionsScreensState extends State<QuestionsScreen> {
   void answerQuestion(String selectedAnswers) {
     setState(
       () {
-        currentQuestionIndex == 5
-            ? Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ResultScreen(),
-                ),
-              )
+        currentQuestionIndex == questionsData.length - 1
+            ? changeToResultScreen()
             : currentQuestionIndex++;
       },
     );
+  }
+
+  void changeToResultScreen() {
+    setState(() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ResultScreen(
+            chosenAnswers: selectedAnswers,
+          ),
+        ),
+      );
+    });
   }
 
   @override
@@ -61,7 +69,12 @@ class _QuestionsScreensState extends State<QuestionsScreen> {
                 return AnswerButton(
                   answerText: answer,
                   onTap: () {
-                    answerQuestion(answer);
+                    setState(
+                      () {
+                        chooseAnswer(answer);
+                        answerQuestion(answer);
+                      },
+                    );
                   },
                 );
               },
