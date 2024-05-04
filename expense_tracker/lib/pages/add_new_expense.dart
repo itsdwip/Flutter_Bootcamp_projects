@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:expense_tracker/models/expense.dart';
+import "package:expense_tracker/core.dart";
 
 class NewExpense extends StatefulWidget {
   const NewExpense({
@@ -72,122 +70,78 @@ class _NewExpenseState extends State<NewExpense> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          TextFieldStyle(
+          TextFieldBlueprint(
             enteredTittle: _tittleController,
-            label: 'Title',
-            keyboardStyle: TextInputType.text,
+            hintText: 'Title',
+            keyboardType: TextInputType.text,
             prefixText: '',
           ),
           const Gap(10),
-          Row(
-            children: [
-              Expanded(
-                child: TextFieldStyle(
-                  enteredTittle: _amountController,
-                  label: 'Amount',
-                  keyboardStyle: const TextInputType.numberWithOptions(),
-                  prefixText: '₹',
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      _selectedDate == null
-                          ? 'No Date Selected'
-                          : formattedIntlDate.format(_selectedDate!),
-                    ),
-                    IconButton(
-                      onPressed: _datePicker,
-                      icon: const Icon(Icons.calendar_month_outlined),
-                    )
-                  ],
-                ),
-              )
-            ],
+          TextFieldBlueprint(
+            enteredTittle: _amountController,
+            prefixText: '₹ ',
+            hintText: 'Amount',
+            keyboardType: const TextInputType.numberWithOptions(),
           ),
           const Gap(10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                width: 100,
-                child: DropdownButton(
-                  isDense: true,
-                  borderRadius: BorderRadius.circular(30),
-                  isExpanded: true,
-                  menuMaxHeight: double.infinity,
-                  value: _selectedCategory,
-                  items: Category.values
-                      .map(
-                        (e) => DropdownMenuItem(
-                          value: e,
-                          child: Text(
-                            e.name.toUpperCase(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  width: 100,
+                  child: DropdownButton(
+                    isDense: true,
+                    borderRadius: BorderRadius.circular(30),
+                    isExpanded: true,
+                    menuMaxHeight: double.infinity,
+                    value: _selectedCategory,
+                    items: Category.values
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(
+                              e.name.toUpperCase(),
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value == null) {
-                      return;
-                    }
-                    setState(() {
-                      _selectedCategory = value;
-                    });
-                  },
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      if (value == null) {
+                        return;
+                      }
+                      setState(() {
+                        _selectedCategory = value;
+                      });
+                    },
+                  ),
                 ),
-              ),
-              const Gap(30),
-              ElevatedButton.icon(
-                onPressed: _submitExpenseData,
-                icon: const Icon(Icons.done_rounded),
-                label: const Text('Save'),
-              ),
-              const Gap(10),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.cancel_outlined),
-                label: const Text('cancel'),
-              ),
-            ],
+                const Gap(5),
+                Text(
+                  _selectedDate == null
+                      ? 'No Date Selected'
+                      : formattedIntlDate.format(_selectedDate!),
+                ),
+                IconButton(
+                  onPressed: _datePicker,
+                  icon: const Icon(Icons.calendar_month_outlined),
+                )
+              ],
+            ),
+          ),
+          LongElevatedButton(
+            buttonTxt: 'save',
+            onTap: _submitExpenseData,
+          ),
+          const Gap(10),
+          LongElevatedButton(
+            buttonTxt: 'cancel',
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class TextFieldStyle extends StatelessWidget {
-  const TextFieldStyle({
-    super.key,
-    required TextEditingController enteredTittle,
-    required this.label,
-    required this.keyboardStyle,
-    required this.prefixText,
-  }) : _enteredTittle = enteredTittle;
-
-  final TextEditingController _enteredTittle;
-  final String label;
-  final TextInputType keyboardStyle;
-  final String prefixText;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: _enteredTittle,
-      keyboardType: keyboardStyle,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-        ),
-        label: Text(label),
-        prefixText: prefixText,
       ),
     );
   }

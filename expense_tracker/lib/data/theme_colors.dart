@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:expense_tracker/core.dart";
 
 const seedColor = Colors.grey;
 final primary = Colors.grey[400];

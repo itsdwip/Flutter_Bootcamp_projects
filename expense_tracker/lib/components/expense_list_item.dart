@@ -1,6 +1,4 @@
-import 'package:expense_tracker/data/theme_colors.dart';
-import 'package:expense_tracker/models/expense.dart';
-import 'package:flutter/material.dart';
+import "package:expense_tracker/core.dart";
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem(this.expense, {super.key});
@@ -10,7 +8,7 @@ class ExpenseListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: background2,
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -18,16 +16,10 @@ class ExpenseListItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  expense.title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
+                Text(expense.title,
+                    style: Theme.of(context).textTheme.titleLarge),
                 Icon(
                   categoryIcons[expense.category],
-                  color: Colors.white,
                 ),
               ],
             ),
@@ -40,14 +32,12 @@ class ExpenseListItem extends StatelessWidget {
                 Text(
                   '₹${expense.amount.toStringAsFixed(2)}',
                   style: const TextStyle(
-                    color: Colors.white,
                     fontSize: 15,
                   ),
                 ),
                 Text(
                   expense.formattedDate,
                   style: const TextStyle(
-                    color: Colors.white,
                     fontSize: 15,
                   ),
                 ),
