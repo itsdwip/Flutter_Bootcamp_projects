@@ -12,21 +12,26 @@ class ExpenseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return ListView.builder(
       itemCount: expenses.length,
       itemBuilder: (context, index) {
         return Dismissible(
-          direction: DismissDirection.endToStart,
+          direction: width < 600
+              ? DismissDirection.endToStart
+              : DismissDirection.startToEnd,
           key: ValueKey(
             expenses[index],
           ),
           background: Card(
             color: Theme.of(context).colorScheme.error,
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+                mainAxisAlignment: width < 600
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
+                children: const [
                   Icon(Icons.delete),
                 ],
               ),

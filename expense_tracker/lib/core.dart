@@ -10,3 +10,4 @@ export "package:expense_tracker/core.dart";
 export 'package:expense_tracker/components/expense_list_item.dart';
 export 'package:expense_tracker/components/long_elevatedbutton_style.dart';
 export 'package:expense_tracker/components/textfield_blueprint.dart';
+export 'package:flutter/services.dart';

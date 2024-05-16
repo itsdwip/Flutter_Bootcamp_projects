@@ -7,6 +7,7 @@ class ExpenseListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: Padding(
@@ -16,8 +17,14 @@ class ExpenseListItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(expense.title,
-                    style: Theme.of(context).textTheme.titleLarge),
+                SizedBox(
+                  width: width < 600 ? width - 100 : width - 550,
+                  child: Text(
+                    expense.title,
+                    style: Theme.of(context).textTheme.titleLarge,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 Icon(
                   categoryIcons[expense.category],
                 ),
